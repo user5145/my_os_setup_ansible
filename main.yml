@@ -1,0 +1,25 @@
+---
+- name: localhost setup
+  hosts: localhost
+  connection: local
+  become: yes
+  become_method: su
+  become_flags: '-s /bin/bash'
+
+  vars:
+    LAPTOP: false
+    USER: user5145
+    SYSTEM_PULSE_DEFAULT_CONF: /etc/pulse/default.pa
+
+  become_user: "{{ USER }}"
+
+  tasks:
+  - include_tasks: playbooks/system_packages.yml
+  - include_tasks: playbooks/gsetup_backup.yml
+  - include_tasks: playbooks/gsetup.yml
+  - include_tasks: playbooks/system_setup.yml
+  - include_tasks: playbooks/system_themes.yml
+  - include_tasks: playbooks/pulse.yml
+  - include_tasks: playbooks/apps.yml
+  - include_tasks: playbooks/flatpak_setup.yml
+  - include_tasks: playbooks/flatpak_apps.yml

@@ -1,0 +1,8 @@
+---
+- name: system packages
+  register: zypper_packages
+  become_user: root
+  zypper:
+    name: ['git', 'subversion', 'flatpak', 'flatpak-builder', 'python', 'python-xml', 'flatpak-builder', 'java-11-openjdk', 'java-11-openjdk-jmods', 'java-1_8_0-openjdk']
+    state: present
+    update_cache: true

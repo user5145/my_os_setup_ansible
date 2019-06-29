@@ -1,0 +1,14 @@
+---
+- name: install themes
+  register: zypper_themes
+  become_user: root
+  zypper:
+    name: ['breeze5-cursors', 'gnome-shell-theme-adapta', 'papirus-icon-theme']
+    state: present
+    update_cache: true
+
+- name: setup gsettings
+  shell: |
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adapta-Eta'
+    gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
+    gsettings set org.gnome.desktop.interface cursor-theme 'breeze_cursors'

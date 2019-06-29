@@ -1,0 +1,6 @@
+---
+- name: setup gsettings
+  shell: |
+    gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
+    gsettings set org.gnome.desktop.media-handling automount-open false
+    gsettings set org.gnome.desktop.media-handling automount false
