@@ -1,0 +1,7 @@
+---
+- name: system packages
+  become_user: root
+  zypper:
+    name: ['git', 'subversion', 'python', 'python-xml', 'java-11-openjdk', 'java-11-openjdk-jmods', 'java-1_8_0-openjdk', 'mono-core', 'h264enc', 'zsh', 'libbdplus0', 'libaacs0', 'libbluray-bdj', 'lz4', 'lvm2', 'dkms', 'cmake', 'clang', 'cryptsetup', 'bluez-firmware', 'gstreamer', 'gstreamer-32bit', 'gstreamer-plugins-ugly', 'gstreamer-plugins-good', 'gstreamer-plugins-good-gtk', 'gstreamer-plugins-base', 'gstreamer-plugins-bad', 'gstreamer-plugins-farstream', 'gstreamer-plugins-libav', 'gstreamer-plugins-vaapi', 'vlc-codec-gstreamer']
+    state: present
+    update_cache: true

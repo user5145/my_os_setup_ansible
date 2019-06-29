@@ -1,0 +1,34 @@
+---
+- name: setup pulse default config
+  template:
+    src: files/pulse/daemon.conf
+    dest: /home/{{ USER }}/.config/pulse/daemon.conf
+    owner: '{{ USER }}'
+    group: users
+    mode: '0644'
+
+- name: setup pulse daemon config
+  template:
+    src: files/pulse/default.pa
+    dest: /home/{{ USER }}/.config/pulse/default.pa
+    owner: '{{ USER }}'
+    group: users
+    mode: '0644'
+
+- name: pulse first change for laptops
+  become_user: root
+  when: LAPTOP != false
+  lineinfile:
+    path: "/home/{{ USER }}/.config/pulse/daemon.conf"
+    regexp: deferred-volume-safety-margin-usec = 6000
+    state: present
+    line: 'deferred-volume-safety-margin-usec = 10000'
+
+- name: pulse second change for laptops
+  become_user: root
+  when: LAPTOP != false
+  lineinfile:
+    path: "/home/{{ USER }}/.config/pulse/daemon.conf"
+    regexp: resample-method = speex-float-10
+    state: present
+    line: 'resample-method = speex-float-9'

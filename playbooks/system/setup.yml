@@ -1,0 +1,38 @@
+---
+- name: grub timeout
+  become_user: root
+  lineinfile:
+    path: "{{ GRUB_CONFIG_FILE }}"
+    regexp: '([\ \#]*)GRUB_TIMEOUT=([0-9]+)'
+    state: present
+    line: 'GRUB_TIMEOUT={{ GRUB_TIMEOUT }}'
+
+- name: kernel args
+  become_user: root
+  lineinfile:
+    path: "{{ GRUB_CONFIG_FILE }}"
+    regexp: ([\ \#]*)GRUB_CMDLINE_LINUX_DEFAULT=([a-zA-Z0-9\ \;\=\_\-\.\:\"\']*)
+    state: present
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="{{ KERNEL_ARGS }}"'
+
+- name: setup system grub
+  become_user: root
+  shell: grub2-mkconfig -o {{ GRUB_GENERATED_CONFIG }}
+
+- name: system packages
+  become_user: root
+  when: LAPTOP != false
+  zypper:
+    name: ['tlp']
+    state: present
+    update_cache: true
+    
+
+- name: enable tlp service
+  become_user: root
+  when: LAPTOP != false
+  service:
+    name: 'tlp'
+    enabled: yes
+    state: started
+    

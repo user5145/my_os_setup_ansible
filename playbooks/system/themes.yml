@@ -1,6 +1,5 @@
 ---
 - name: install themes
-  register: zypper_themes
   become_user: root
   zypper:
     name: ['breeze5-cursors', 'gnome-shell-theme-adapta', 'papirus-icon-theme']

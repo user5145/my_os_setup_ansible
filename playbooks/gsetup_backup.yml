@@ -1,6 +1,0 @@
----
-- name: backup
-  script: scripts/backup_gset.py > /home/{{ USER }}/gset.bak
-  run_once: true
-  args:
-    executable: python2

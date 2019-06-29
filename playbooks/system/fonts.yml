@@ -1,0 +1,8 @@
+---
+- name: system packages
+  register: zypper_packages
+  become_user: root
+  zypper:
+    name: ['source-han-serif-tw-fonts', 'adobe-sourcehansans-tw-fonts', 'noto-serif-jp-fonts-full']
+    state: present
+    update_cache: true

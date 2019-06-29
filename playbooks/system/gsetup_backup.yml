@@ -1,0 +1,10 @@
+---
+- name: prepare_backup
+  script: /usr/bin/mkdir -p /home/{{ USER }}/gsettings_backup
+  run_once: true
+
+- name: backup
+  script: scripts/backup_gset.py > /home/{{ USER }}/gsettings_backup/gset.bak
+  run_once: true
+  args:
+    executable: python2

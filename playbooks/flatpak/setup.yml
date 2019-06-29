@@ -1,0 +1,14 @@
+---
+- name: install flatpak
+  become_user: root
+  zypper:
+    name: ['flatpak', 'flatpak-builder']
+    state: present
+    update_cache: true
+
+- name: setup flatpak
+  shell: |
+    flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak --user remote-add --if-not-exists kdeapps --from https://distribute.kde.org/kdeapps.flatpakrepo
+    flatpak --user remote-add --if-not-exists firefox https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo
+    flatpak --user remote-add --if-not-exists winepak https://dl.winepak.org/repo/winepak.flatpakrepo

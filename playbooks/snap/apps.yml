@@ -1,0 +1,5 @@
+---
+- name: install flatpak apps
+  become_user: root
+  shell: |
+    snap install firefox

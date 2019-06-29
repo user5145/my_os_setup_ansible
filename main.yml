@@ -1,4 +1,5 @@
 ---
+# it doesnt install nvidia, because of it's terrible support
 - name: localhost setup
   hosts: localhost
   connection: local
@@ -10,16 +11,24 @@
     LAPTOP: false
     USER: user5145
     SYSTEM_PULSE_DEFAULT_CONF: /etc/pulse/default.pa
+    # for available devices run and guess which one you use: pacmd list-sources | grep -Po '(?<=name: \<).*(?=\>)'
+    SOURCE_MASTER: alsa_input.pci-0000_00_1f.3.analog-stereo 
+    KERNEL_ARGS: intel_iommu=on nvidia-drm.modeset=1 snd-hda-intel.power_save=0 snd-hda-intel.enable_msi=1 rd.driver.pre=vfio-pci vfio-pci.ids=10ec:8168 zswap.enabled=1 zswap.compressor=lz4 splash=silent quiet
+    GRUB_TIMEOUT: 1
+    GRUB_CONFIG_FILE: /etc/default/grub
+    GRUB_GENERATED_CONFIG: /boot/grub2/grub.cfg
 
   become_user: "{{ USER }}"
 
   tasks:
-  - include_tasks: playbooks/system_packages.yml
-  - include_tasks: playbooks/gsetup_backup.yml
-  - include_tasks: playbooks/gsetup.yml
-  - include_tasks: playbooks/system_setup.yml
-  - include_tasks: playbooks/system_themes.yml
-  - include_tasks: playbooks/pulse.yml
-  - include_tasks: playbooks/apps.yml
-  - include_tasks: playbooks/flatpak_setup.yml
-  - include_tasks: playbooks/flatpak_apps.yml
+  - include_tasks: playbooks/system/basic_packages.yml
+  - include_tasks: playbooks/system/gsetup_backup.yml
+  - include_tasks: playbooks/system/gsetup.yml
+  - include_tasks: playbooks/system/setup.yml
+  - include_tasks: playbooks/system/themes.yml
+  - include_tasks: playbooks/system/pulse.yml
+  - include_tasks: playbooks/system/apps.yml
+  - include_tasks: playbooks/flatpak/setup.yml
+  - include_tasks: playbooks/flatpak/apps.yml
+  - include_tasks: playbooks/snap/setup.yml
+  - include_tasks: playbooks/snap/apps.yml

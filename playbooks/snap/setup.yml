@@ -1,0 +1,30 @@
+---
+- name: install flatpak
+  become_user: root
+  zypper_repository:
+    name: "snap"
+    repo: "https://download.opensuse.org/repositories/system:/snappy/openSUSE_Tumbleweed"
+    state: present
+    auto_import_keys: yes
+    runrefresh: yes
+
+- name: system packages
+  become_user: root
+  zypper:
+    name: ['snapd']
+    state: present
+    update_cache: true
+
+- name: enable snap service
+  become_user: root
+  service:
+    name: 'snapd'
+    enabled: yes
+    state: started
+
+- name: enable snap service
+  become_user: root
+  service:
+    name: 'snapd.apparmor'
+    enabled: yes
+#    state: started  broken...

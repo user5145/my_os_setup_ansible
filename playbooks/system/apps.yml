@@ -3,6 +3,6 @@
   register: zypper_packages
   become_user: root
   zypper:
-    name: ['gnome-tweaks']
+    name: ['gnome-tweaks', 'qemu', 'qemu-kvm', 'qemu-extra', 'virt-manager', 'virt-viewer']
     state: present
     update_cache: true

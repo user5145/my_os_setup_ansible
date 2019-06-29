@@ -1,0 +1,5 @@
+---
+- name: install flatpak apps
+  shell: |
+    flatpak --user -y install flathub org.kde.krita//stable
+    flatpak --user -y install firefox org.mozilla.FirefoxDevEdition//master
