@@ -1,15 +1,46 @@
 ---
-- name: install flatpak runtimes
-  shell: |
-    flatpak --user -y install winepak org.winepak.Platform/i386/3.0
-    flatpak --user -y install winepak org.winepak.Platform/i386/3.8
-    flatpak --user -y install winepak org.winepak.Platform/i386/3.9
-    flatpak --user -y install winepak org.winepak.Platform/i386/3.10
-    flatpak --user -y install winepak org.winepak.Sdk/i386/3.0
-    flatpak --user -y install winepak org.winepak.Sdk/i386/3.8
-    flatpak --user -y install winepak org.winepak.Sdk/i386/3.9
-    flatpak --user -y install winepak org.winepak.Sdk/i386/3.10
 - name: install flatpak apps
   shell: |
+    set -e
+    source ~/.profile
     flatpak --user -y install flathub org.kde.krita//stable
-    flatpak --user -y install firefox org.mozilla.FirefoxDevEdition//master
+    flatpak --user -y install flathub com.visualstudio.code//stable
+    flatpak --user -y install flathub com.visualstudio.code.oss//stable
+    flatpak --user -y install flathub com.mojang.Minecraft//stable
+    flatpak --user -y install flathub org.videolan.VLC//stable
+    flatpak --user -y install flathub org.videolan.VLC.Plugin.bdj//3-18.08
+    flatpak --user -y install flathub org.videolan.VLC.Plugin.fdkaac//3-18.08
+    flatpak --user -y install flathub org.videolan.VLC.Plugin.makemkv//3-18.08
+    flatpak --user -y install flathub com.makemkv.MakeMKV//stable
+    flatpak --user -y install flathub org.musescore.MuseScore//stable
+    flatpak --user -y install flathub com.discordapp.Discord//stable
+    flatpak --user -y install flathub org.gimp.GIMP//stable
+    flatpak --user -y install flathub org.kde.kdenlive//stable
+    flatpak --user -y install flathub org.vim.Vim//stable
+    flatpak --user -y install flathub org.libreoffice.LibreOffice//stable
+    flatpak --user -y install flathub com.skype.Client//stable
+    flatpak --user -y install flathub org.godotengine.Godot//stable
+    flatpak --user -y install flathub org.ppsspp.PPSSPP//stable
+    flatpak --user -y install flathub com.shatteredpixel.shatteredpixeldungeon//stable
+    flatpak --user -y install flathub org.openttd.OpenTTD//stable
+    flatpak --user -y install flathub org.blender.Blender//stable
+    flatpak --user -y install flathub org.audacityteam.Audacity//stable
+    flatpak --user -y install flathub org.filezillaproject.Filezilla//stable
+    flatpak --user -y install flathub io.atom.Atom//stable
+    flatpak --user -y install flathub com.notepadqq.Notepadqq//stable
+    flatpak --user -y install flathub com.calibre_ebook.calibre//stable
+    flatpak --user -y install flathub org.gottcode.FocusWriter//stable
+    flatpak --user -y install flathub com.teamspeak.TeamSpeak//stable
+    flatpak --user -y install flathub com.jgraph.drawio.desktop//stable
+    flatpak --user -y install flathub br.com.jeanhertel.adriconf//stable
+    flatpak --user -y install flathub net.ankiweb.Anki//stable
+    flatpak --user -y install flathub cc.arduino.arduinoide//stable
+    flatpak --user -y install flathub com.google.AndroidStudio//stable
+    flatpak --user -y install flathub org.gnome.gitg//stable
+    flatpak --user -y install flathub org.gnome.Glade//stable
+    flatpak --user -y install flathub org.apache.netbeans//stable
+    flatpak --user -y install flathub com.unity.UnityHub//stable
+    flatpak --user -y install flathub com.obsproject.Studio//stable
+    flatpak --user -y install flathub org.gnome.Lollypop//stable
+    flatpak --user -y install flathub org.clementine_player.Clementine//stable
+    flatpak --user -y install flathub com.vinszent.GnomeTwitch//stable

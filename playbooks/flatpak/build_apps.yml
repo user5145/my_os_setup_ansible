@@ -1,0 +1,61 @@
+---
+- name: set flatpak local repo
+  shell: |
+    set -e
+    flatpak --user remote-add --if-not-exists --no-gpg-verify my_repo "{{ MY_FLATPAK_REPO }}"
+
+- name: install flatpak runtimes
+  shell: |
+    set -e
+
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.8-staging
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.9-staging
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.10-staging
+    flatpak --user -y install flathub org.kde.Platform/x86_64/5.11
+    flatpak --user -y install flathub org.kde.Sdk/x86_64/5.11
+
+
+- name: build flatpaked dofus
+  ignore_errors: yes
+  shell: |
+    set -e
+    export FLATPAK_NAME=com.ankama.Dofus
+    export FLATPAK_GIT_NAME=com.ankama.Dofus-flatpak
+    export FLATPAK_URL=https://github.com/user5145/com.ankama.Dofus-flatpak.git
+
+
+    flatpak list | grep "${FLATPAK_NAME}" && exit 0
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.0
+    flatpak --user -y install winepak org.winepak.Sdk/i386/3.0
+
+    mkdir -p /tmp/${FLATPAK_NAME}-gitclone
+    cd /tmp/${FLATPAK_NAME}-gitclone
+    rm -Rf /tmp/${FLATPAK_NAME}-gitclone/${FLATPAK_GIT_NAME}
+    git clone ${FLATPAK_URL}
+    cd ${FLATPAK_GIT_NAME}
+    flatpak-builder --user --repo="${MY_FLATPAK_REPO}" --force-clean ../build-dir ${FLATPAK_NAME}.yml
+    flatpak --user -y install my_repo ${FLATPAK_NAME}
+
+
+- name: build flatpaked osu-lazer
+  ignore_errors: yes
+  shell: |
+    set -e
+    export FLATPAK_NAME=sh.ppy.Osu-lazer
+    export FLATPAK_GIT_NAME=sh.ppy.Osu-lazer-flatpak
+    export FLATPAK_URL=https://github.com/user5145/sh.ppy.Osu-lazer-flatpak.git
+
+    flatpak list | grep "${FLATPAK_NAME}" && exit 0
+    flatpak --user -y install flathub org.kde.Platform/x86_64/5.12
+    flatpak --user -y install flathub org.kde.Sdk/x86_64/5.12
+    flatpak --user -y install flathub io.qt.qtwebkit.BaseApp/x86_64/5.12
+    flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk8/x86_64/18.08
+
+    mkdir -p /tmp/${FLATPAK_NAME}-gitclone
+    cd /tmp/${FLATPAK_NAME}-gitclone
+    rm -Rf /tmp/${FLATPAK_NAME}-gitclone/${FLATPAK_GIT_NAME}
+    git clone ${FLATPAK_URL}
+    cd ${FLATPAK_GIT_NAME}
+    flatpak-builder --user --repo="${MY_FLATPAK_REPO}" --force-clean ../build-dir ${FLATPAK_NAME}.yml
+    flatpak --user -y install my_repo ${FLATPAK_NAME}
+

@@ -6,8 +6,25 @@
     state: present
     update_cache: true
 
+
+- name: setup XDG flatpak
+  register: XDG_DATA
+  shell: |
+    set -e
+    if [[ -z ${XDG_DATA_HOME} ]]; then
+      echo 'export XDG_DATA_HOME="{{ XDG_DATA_HOME }}"' >> ~/.profile && echo 'export XDG_DATA_DIRS="{{ XDG_DATA_HOME }}/flatpak/exports/share:${XDG_DATA_DIRS}"' >> ~/.profile
+      echo ">>>>>>>>>>>>>>>>>>>>>>>>>>> PLEASE REBOOT!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" >> /dev/stderr
+      echo "worked" >> ~/testtttttt
+    fi
+
+- name: setup XDG flatpak reboot
+  fail:
+    msg: "client has to be rebooted"
+  when: "'>>>>>>>>>>>>>>>>>>>>>>>>>>> PLEASE REBOOT!! <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<' in XDG_DATA.stderr"
+
 - name: setup flatpak
   shell: |
+    set -e
     flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
     flatpak --user remote-add --if-not-exists kdeapps --from https://distribute.kde.org/kdeapps.flatpakrepo
     flatpak --user remote-add --if-not-exists firefox https://firefox-flatpak.mojefedora.cz/org.mozilla.FirefoxRepo.flatpakrepo

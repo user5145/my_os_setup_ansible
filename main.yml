@@ -1,5 +1,10 @@
 ---
+#
 # it doesnt install nvidia, because of it's terrible support
+# steam is not configured
+#
+# please reboot when it finish
+# 
 - name: localhost setup
   hosts: localhost
   connection: local
@@ -17,6 +22,10 @@
     GRUB_TIMEOUT: 1
     GRUB_CONFIG_FILE: /etc/default/grub
     GRUB_GENERATED_CONFIG: /boot/grub2/grub.cfg
+    XDG_DATA_HOME: /mnt/storage/storage/.flatpak
+    MY_FLATPAK_REPO: /mnt/storage/storage/my_flatpak_repo
+    GIT_EMAIL: user5145@users.noreply.github.com
+    GIT_USERNAME: user5145
 
   become_user: "{{ USER }}"
 
@@ -28,7 +37,10 @@
   - include_tasks: playbooks/system/themes.yml
   - include_tasks: playbooks/system/pulse.yml
   - include_tasks: playbooks/system/apps.yml
+
   - include_tasks: playbooks/flatpak/setup.yml
   - include_tasks: playbooks/flatpak/apps.yml
+  # - include_tasks: playbooks/flatpak/build_apps.yml
+
   - include_tasks: playbooks/snap/setup.yml
   - include_tasks: playbooks/snap/apps.yml

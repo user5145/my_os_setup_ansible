@@ -19,6 +19,11 @@
   become_user: root
   shell: grub2-mkconfig -o {{ GRUB_GENERATED_CONFIG }}
 
+- name: setup system grub
+  shell: |
+    git config user.email "{{ GIT_EMAIL }}"
+    git config user.name "{{ GIT_USERNAME }}"
+
 - name: system packages
   become_user: root
   when: LAPTOP != false
