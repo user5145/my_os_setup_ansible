@@ -1,4 +1,14 @@
 ---
+- name: install flatpak runtimes
+  shell: |
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.0
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.8
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.9
+    flatpak --user -y install winepak org.winepak.Platform/i386/3.10
+    flatpak --user -y install winepak org.winepak.Sdk/i386/3.0
+    flatpak --user -y install winepak org.winepak.Sdk/i386/3.8
+    flatpak --user -y install winepak org.winepak.Sdk/i386/3.9
+    flatpak --user -y install winepak org.winepak.Sdk/i386/3.10
 - name: install flatpak apps
   shell: |
     flatpak --user -y install flathub org.kde.krita//stable
